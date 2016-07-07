@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<mvc:annotation-driven />
+
+    <mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
+    
+    <!-- 这几个都是静态资源应该整合到 /resources/ 下面 -->
+    <mvc:resources mapping="/assets/**" 	location="/assets/" 	cache-period="41556926"/>
+    <mvc:resources mapping="/docs/**" 		location="/docs/" 		cache-period="51556926"/>
+    <mvc:resources mapping="/html/**" 		location="/html/" 		cache-period="61556926"/>
+    <mvc:resources mapping="/jsp/**" 		location="/jsp/" 		cache-period="71556926"/>
+    
+    <!-- 上传文件 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="9000000" />
+	</bean>    
+    
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+	   	<!-- 目前先放到 webapp下面，等项目功能做完了之后移动到 /WEB-INF/jsp 下面 -->
+	    <property name="prefix" value="/WEB-INF/view/"/>
+<!-- 	    <property name="prefix" value="/jsp/"/> -->
+	    <property name="suffix" value=".jsp"/>
+	</bean>    
+
+</beans>
